@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Receipt | Bus Pass Management System</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Navigation Bar (Hidden during print) -->
+    <nav class="navbar navbar-expand-lg navbar-custom no-print">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fa-solid fa-bus-simple"></i>
+                <span>Bus Pass Management</span>
+            </a>
+            <div class="d-flex align-items-center gap-3">
+                <a href="status.html" class="btn btn-outline-primary btn-sm">
+                    <i class="fa-solid fa-clock-rotate-left me-1"></i>Back to Status
+                </a>
+                <div id="nav-student-info"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Receipt Container -->
+    <div class="page-container d-flex flex-column align-items-center justify-content-center">
+        <div class="container" style="max-width: 680px;">
+
+            <!-- Dynamic Alert Message -->
+            <div id="alertBox" class="alert alert-feedback no-print"></div>
+
+            <!-- Action Buttons Above Receipt -->
+            <div class="d-flex justify-content-between align-items-center mb-3 no-print">
+                <a href="status.html" class="btn btn-outline-secondary">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Back to Status
+                </a>
+                <button type="button" class="btn btn-primary-custom" onclick="window.print()">
+                    <i class="fa-solid fa-print me-1"></i> Print Receipt
+                </button>
+            </div>
+
+            <!-- Printable Receipt Card -->
+            <div class="card card-custom" id="printable-receipt">
+                <div class="card-header-custom p-4 text-center">
+                    <div class="d-flex align-items-center justify-content-center gap-2 mb-1">
+                        <i class="fa-solid fa-bus-simple fs-3"></i>
+                        <h4 class="mb-0 fw-bold">College Transit Authority</h4>
+                    </div>
+                    <p class="small mb-0 text-white-50">Official Student Bus Pass Payment Receipt</p>
+                </div>
+
+                <div class="card-body p-4 p-md-5">
+
+                    <!-- Success Banner -->
+                    <div class="text-center mb-4">
+                        <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-success-subtle text-success p-3 mb-2" style="width: 65px; height: 65px;">
+                            <i class="fa-solid fa-check fa-2x"></i>
+                        </div>
+                        <h4 class="fw-bold text-success mb-1" id="rStatus">Payment Successful</h4>
+                        <p class="text-muted small">Transaction ID: TXN-<span id="txnId">982341908</span></p>
+                    </div>
+
+                    <!-- Receipt Details Grid -->
+                    <div class="table-responsive mb-4">
+                        <table class="table table-bordered mb-0">
+                            <tbody>
+                                <tr>
+                                    <th class="bg-light text-muted w-40">Pass Application ID</th>
+                                    <td class="fw-bold text-primary" id="rPassId">#BP-...</td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light text-muted">Student Name</th>
+                                    <td class="fw-semibold text-dark" id="rStudentName">...</td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light text-muted">Student Email</th>
+                                    <td class="text-dark" id="rStudentEmail">...</td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light text-muted">Transit Route</th>
+                                    <td>
+                                        <span class="fw-bold text-dark" id="rSource">...</span>
+                                        <i class="fa-solid fa-arrow-right-long text-primary mx-2"></i>
+                                        <span class="fw-bold text-dark" id="rDestination">...</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light text-muted">Pass Type</th>
+                                    <td><span class="badge bg-primary-subtle text-primary border border-primary-subtle" id="rPassType">Monthly</span></td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light text-muted">Pass Validity</th>
+                                    <td id="rValidity">...</td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light text-muted">Amount Paid</th>
+                                    <td class="fw-bold text-success fs-5" id="rAmount">₹300.0</td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light text-muted">Application Status</th>
+                                    <td>
+                                        <span id="rAppStatusBadge" class="badge-status badge-pending">
+                                            <i class="fa-solid fa-clock me-1"></i>
+                                            <span id="rAppStatus">Pending</span>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Notice / Verification Footer -->
+                    <div class="border rounded p-3 bg-light text-center small text-muted">
+                        <p class="mb-1"><strong>Note:</strong> Your bus pass application is submitted to the Transit Administrator for digital verification.</p>
+                        <p class="mb-0">Please show this receipt or check your live status in the portal.</p>
+                    </div>
+
+                </div>
+
+                <div class="card-footer bg-white border-top text-center py-3 text-muted small">
+                    College Bus Pass Management System &bull; Generated digitally
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Application JS -->
+    <script src="script.js"></script>
+</body>
+</html>
