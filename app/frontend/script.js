@@ -5,8 +5,7 @@
 
 // Central API Base URL Configuration
 // Directs all requests to FastAPI backend on port 8000 (works seamlessly with VS Code Live Server port 5500)
-const API_BASE_URL = "http://127.0.0.1:8000";
-
+const API_BASE_URL = "https://buss-pass-system.onrender.com";
 // ==============================================================
 // Utility Functions
 // ==============================================================
