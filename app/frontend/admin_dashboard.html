@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Bus Pass Management System</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .admin-sidebar {
+            background-color: var(--primary-dark);
+            min-height: 100vh;
+            color: #e2e8f0;
+            padding: 1.5rem 1rem;
+        }
+        .admin-nav-item {
+            color: #94a3b8;
+            font-weight: 500;
+            padding: 0.75rem 1rem;
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            text-decoration: none;
+            margin-bottom: 0.4rem;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .admin-nav-item:hover, .admin-nav-item.active {
+            color: #ffffff;
+            background-color: rgba(13, 110, 253, 0.2);
+            border-left: 4px solid var(--primary-blue);
+        }
+        .admin-content {
+            flex: 1;
+            padding: 2rem;
+            background-color: #f8fafc;
+        }
+        .stat-card-admin {
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            background: #ffffff;
+            border: 1px solid #edf2f7;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .stat-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        @media (max-width: 991.98px) {
+            .admin-sidebar {
+                min-height: auto;
+            }
+        }
+    </style>
+</head>
+<body id="adminDashboardView">
+
+    <div class="d-flex flex-column flex-lg-row">
+
+        <!-- Sidebar Navigation -->
+        <aside class="admin-sidebar col-lg-2">
+            <div class="d-flex align-items-center gap-2 mb-4 px-2">
+                <i class="fa-solid fa-bus-simple text-primary fs-3"></i>
+                <h5 class="fw-bold mb-0 text-white">Transit Admin</h5>
+            </div>
+
+            <nav class="nav flex-column">
+                <div class="admin-nav-item active admin-filter-btn" onclick="filterApplications('all', this)">
+                    <i class="fa-solid fa-gauge"></i>
+                    <span>Dashboard</span>
+                </div>
+                <div class="admin-nav-item admin-filter-btn" onclick="filterApplications('all', this)">
+                    <i class="fa-solid fa-list-check"></i>
+                    <span>Applications</span>
+                </div>
+                <div class="admin-nav-item admin-filter-btn" onclick="filterApplications('approved', this)">
+                    <i class="fa-solid fa-circle-check text-success"></i>
+                    <span>Approved</span>
+                </div>
+                <div class="admin-nav-item admin-filter-btn" onclick="filterApplications('pending', this)">
+                    <i class="fa-solid fa-clock text-warning"></i>
+                    <span>Pending</span>
+                </div>
+                <div class="admin-nav-item admin-filter-btn" onclick="filterApplications('rejected', this)">
+                    <i class="fa-solid fa-circle-xmark text-danger"></i>
+                    <span>Rejected</span>
+                </div>
+                <hr class="border-secondary my-3">
+                <a href="index.html" class="admin-nav-item">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Public Home</span>
+                </a>
+                <div class="admin-nav-item text-danger" onclick="adminLogout()">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Logout</span>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content View -->
+        <main class="admin-content col-lg-10">
+
+            <!-- Top Header -->
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+                <div>
+                    <h3 class="fw-bold text-dark mb-1">
+                        <i class="fa-solid fa-chart-line text-primary me-2"></i>Transit Administration Console
+                    </h3>
+                    <p class="text-muted mb-0">Review student bus pass applications and authorize digital approvals.</p>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <button class="btn btn-outline-secondary" onclick="initAdminDashboard()" title="Refresh Data">
+                        <i class="fa-solid fa-arrows-rotate me-1"></i> Refresh
+                    </button>
+                    <button class="btn btn-outline-danger" onclick="adminLogout()">
+                        <i class="fa-solid fa-right-from-bracket me-1"></i> Logout
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dynamic Alert Box -->
+            <div id="adminAlertBox" class="alert alert-feedback"></div>
+
+            <!-- Dashboard Metric Cards -->
+            <div class="row g-3 mb-4">
+                <!-- Total Applications -->
+                <div class="col-sm-6 col-xl-3">
+                    <div class="stat-card-admin">
+                        <div>
+                            <span class="text-muted small fw-semibold">TOTAL APPLICATIONS</span>
+                            <h3 class="fw-bold text-dark mb-0 mt-1" id="cardTotal">0</h3>
+                        </div>
+                        <div class="stat-icon bg-primary-subtle text-primary">
+                            <i class="fa-solid fa-folder-open"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pending Applications -->
+                <div class="col-sm-6 col-xl-3">
+                    <div class="stat-card-admin">
+                        <div>
+                            <span class="text-muted small fw-semibold">PENDING APPROVAL</span>
+                            <h3 class="fw-bold text-warning mb-0 mt-1" id="cardPending">0</h3>
+                        </div>
+                        <div class="stat-icon bg-warning-subtle text-warning">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Approved Applications -->
+                <div class="col-sm-6 col-xl-3">
+                    <div class="stat-card-admin">
+                        <div>
+                            <span class="text-muted small fw-semibold">APPROVED PASSES</span>
+                            <h3 class="fw-bold text-success mb-0 mt-1" id="cardApproved">0</h3>
+                        </div>
+                        <div class="stat-icon bg-success-subtle text-success">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rejected Applications -->
+                <div class="col-sm-6 col-xl-3">
+                    <div class="stat-card-admin">
+                        <div>
+                            <span class="text-muted small fw-semibold">REJECTED PASSES</span>
+                            <h3 class="fw-bold text-danger mb-0 mt-1" id="cardRejected">0</h3>
+                        </div>
+                        <div class="stat-icon bg-danger-subtle text-danger">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Applications Management Table Card -->
+            <div class="card card-custom">
+                <div class="card-header-custom d-flex flex-wrap justify-content-between align-items-center gap-2">
+                    <h5 class="mb-0 fw-bold"><i class="fa-solid fa-table-list me-2"></i>Student Pass Applications</h5>
+                    <div class="btn-group btn-group-sm" role="group">
+                        <button type="button" class="btn btn-light active" onclick="filterApplications('all', this)">All</button>
+                        <button type="button" class="btn btn-light" onclick="filterApplications('pending', this)">Pending</button>
+                        <button type="button" class="btn btn-light" onclick="filterApplications('approved', this)">Approved</button>
+                        <button type="button" class="btn btn-light" onclick="filterApplications('rejected', this)">Rejected</button>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+
+                    <!-- Loading State -->
+                    <div id="adminLoading" class="text-center py-5">
+                        <div class="spinner-border text-primary" role="status"></div>
+                        <p class="mt-2 text-muted small">Loading applications from database...</p>
+                    </div>
+
+                    <!-- Empty State -->
+                    <div id="adminEmpty" class="text-center py-5" style="display: none;">
+                        <i class="fa-solid fa-clipboard-check fa-3x text-muted mb-3 opacity-50"></i>
+                        <h5 class="fw-bold text-dark">No Applications Found</h5>
+                        <p class="text-muted small">No applications match the current filter criteria.</p>
+                    </div>
+
+                    <!-- Table Responsive -->
+                    <div class="table-responsive">
+                        <table class="table table-custom table-hover align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Pass ID</th>
+                                    <th>Student Details</th>
+                                    <th>Source</th>
+                                    <th>Destination</th>
+                                    <th>Pass Type</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminTableBody">
+                                <!-- Loaded dynamically via fetch() -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Application JS -->
+    <script src="script.js"></script>
+</body>
+</html>
