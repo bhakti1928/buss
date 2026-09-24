@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration | Bus Pass Management System</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fa-solid fa-bus-simple"></i>
+                <span>Bus Pass Management</span>
+            </a>
+            <div class="d-flex align-items-center gap-2">
+                <a href="index.html" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-house me-1"></i>Home</a>
+                <a href="login.html" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-right-to-bracket me-1"></i>Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Registration Container -->
+    <div class="page-container d-flex align-items-center justify-content-center">
+        <div class="container" style="max-width: 580px;">
+            <div class="card card-custom">
+                <div class="card-header-custom text-center">
+                    <h4 class="mb-1"><i class="fa-solid fa-user-plus me-2"></i>Student Registration</h4>
+                    <p class="mb-0 small text-white-50">Create your account to apply for a student bus pass</p>
+                </div>
+                <div class="card-body p-4 p-md-5">
+
+                    <!-- Dynamic Alert Message -->
+                    <div id="alertBox" class="alert alert-feedback"></div>
+
+                    <form id="registerForm" novalidate>
+                        <!-- Full Name -->
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Full Name <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                                <input type="text" class="form-control" id="name" placeholder="Enter student full name" required>
+                            </div>
+                        </div>
+
+                        <!-- Email Address -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
+                                <input type="email" class="form-control" id="email" placeholder="student@example.com" required>
+                            </div>
+                            <small class="text-muted">Must be a valid email for pass verification.</small>
+                        </div>
+
+                        <!-- Mobile Number -->
+                        <div class="mb-3">
+                            <label for="mobile" class="form-label">Mobile Number <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
+                                <input type="tel" class="form-control" id="mobile" placeholder="10-digit mobile number" maxlength="15" required>
+                            </div>
+                        </div>
+
+                        <!-- College Name -->
+                        <div class="mb-3">
+                            <label for="college" class="form-label">College Name <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-building-columns"></i></span>
+                                <input type="text" class="form-control" id="college" placeholder="Enter college or polytechnic name" required>
+                            </div>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="mb-4">
+                            <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                                <input type="password" class="form-control" id="password" placeholder="Create a secure password" minlength="4" required>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary-custom w-100 py-2">
+                            <i class="fa-solid fa-check-circle me-1"></i> Register Account
+                        </button>
+                    </form>
+
+                    <!-- Footer Link -->
+                    <div class="text-center mt-4 pt-2 border-top">
+                        <span class="text-muted small">Already registered? </span>
+                        <a href="login.html" class="fw-semibold text-primary small text-decoration-none">Login here</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Application JS -->
+    <script src="script.js"></script>
+</body>
+</html>
